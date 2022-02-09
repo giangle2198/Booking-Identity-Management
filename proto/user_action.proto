@@ -1,0 +1,133 @@
+syntax = "proto3";
+option go_package = ".;pb";
+package pb;
+
+import "gogoproto/gogo.proto";
+
+message UserLoginRequest {
+    string domain = 1;
+    string password = 2;
+}
+
+message UserLoginResponse {
+    string status_code = 1;
+    string reason_code = 2;
+    string reason_message = 3;
+    string paseto = 4;
+    string jwt = 5;
+}
+
+message UserRegisterRequest{
+    string email = 1;
+    string domain = 2;
+    string password = 3;
+    string first_name = 4;
+    string last_name = 5;
+    string address = 6;
+    string full_name = 7;
+    string phone = 8;
+}
+
+message UserRegisterResponse{
+    string status_code = 1;
+    string reason_code = 2;
+    string reason_message = 3;
+    string paseto = 4;
+    string jwt = 5;
+}
+
+message UserLogoutRequest {
+  string domain = 1;
+  string token = 2;
+}
+
+message UserLogoutResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+message UserDetails {
+  string full_name = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string address = 5;
+  string phone_number = 6;
+  string domain = 7;
+  bool is_active = 8;
+}
+
+
+message GetUserDetailRequest {
+  string domain = 1;
+}
+
+message GetUserDetailResponse {
+  UserDetails user_details = 1;
+  string status_code = 2;
+  string reason_code = 3;
+  string reason_message = 4;
+}
+
+message SearchUserRequest {
+  string domain = 1;
+}
+
+message User {
+  string email = 1;
+  string phone_number = 2;
+  string domain = 3;
+  string employee_id = 4;
+  uint32 user_id = 5;
+}
+
+message SearchUserResponse {
+  repeated UserDetails user_details = 1;
+  string status_code = 2;
+  string reason_code = 3;
+  string reason_message = 4;
+}
+
+message SetUserDetailRequest {
+  string full_name = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string address = 5;
+  string phone_number = 6;
+  string domain = 7;
+  bool is_active = 8;
+}
+
+message SetUserDetailResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+message DeleteUserDetailRequest {
+  int32 user_id = 1[
+    (gogoproto.customname) = "UserID"
+  ];
+  string domain = 2;
+}
+
+message DeleteUserDetailResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+
+message VerifyTokenRequest {
+  string jwt = 1;
+  string uid = 2;
+}
+
+message VerifyTokenResponse {
+  string domain = 1;
+  string status_code = 3;
+  string reason_code = 4;
+  string reason_message = 5;
+}

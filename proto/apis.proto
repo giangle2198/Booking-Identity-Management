@@ -1,0 +1,315 @@
+syntax = "proto3";
+option go_package = ".;pb";
+package pb;
+
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+import "user_action.proto";
+import "role_action.proto";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "Booking Identity Management";
+        version: "1.0";
+    };
+    security_definitions: {
+        security: {
+            key: "APIKeyAuthentication";
+            value: {
+                type: TYPE_API_KEY;
+                in: IN_HEADER;
+                name: "Authorization";
+            }
+        }
+    };
+};
+
+service BIMAPI {
+  // User 
+  rpc DoLogin(UserLoginRequest) returns (UserLoginResponse) {
+      option (google.api.http) = {
+          post: "/bim/v1/user/login",
+          body: "*"
+      };
+      option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+          summary: "Login by domain and pw";
+          tags: "UserActionAPIs";
+          security: {
+              security_requirement: {
+                  key: "APIKeyAuthentication";
+                  value: {}
+              }
+          }
+      };
+  }
+
+  rpc DoRegister(UserRegisterRequest) returns (UserRegisterResponse) {
+      option (google.api.http) = {
+          post: "/bim/v1/user/register",
+          body: "*"
+      };
+      option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+          summary: "register user";
+          tags: "UserActionAPIs";
+          security: {
+              security_requirement: {
+                  key: "APIKeyAuthentication";
+                  value: {}
+              }
+          }
+      };
+  }
+
+  rpc DoLogout(UserLogoutRequest) returns (UserLogoutResponse) {
+    option (google.api.http) = {
+        post: "/bim/v1/user/logout",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "register user";
+        tags: "UserActionAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+ 
+  rpc DoGetUserDetail(GetUserDetailRequest) returns (GetUserDetailResponse) {
+    option (google.api.http) = {
+        get: "/bim/v1/user/detail"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Get user details from DB";
+        tags: "UserActionAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoSearchUsers(SearchUserRequest) returns (SearchUserResponse){
+    option (google.api.http) = {
+        post: "/bim/v1/user",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Search User with domain";
+        tags: "UserActionAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoSetUserDetail(SetUserDetailRequest) returns (SetUserDetailResponse) {
+    option (google.api.http) = {
+        post: "/bim/v1/iam/user",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Edit User Detail";
+        tags: "UserActionAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+ }
+
+  rpc DoDeleteUser(DeleteUserDetailRequest) returns (DeleteUserDetailResponse) {
+    option (google.api.http) = {
+        delete: "/bim/v1/iam/user",
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Delete User Detail";
+        tags: "UserActionAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+ }
+
+  rpc DoGetRoles(GetRolesRequest) returns(GetRolesResponse){
+    option (google.api.http) = {
+        get: "/bim/v1/iam/roles"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Search User with domain";
+        tags: "RoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+
+  rpc DoGetRole(GetRoleDetailRequest) returns(GetRoleDetailResponse){
+    option (google.api.http) = {
+        get: "/bim/v1/iam/role/detail"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Search Role with id";
+        tags: "RoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoCreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+        post: "/bim/v1/iam/roles",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Create new role";
+        tags: "RoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoUpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+    option (google.api.http) = {
+        patch: "/bim/v1/iam/roles",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Update role";
+        tags: "RoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoDeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
+    option (google.api.http) = {
+        delete: "/bim/v1/iam/roles",
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Delete role";
+        tags: "RoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  // UserRoleAPIs
+  rpc DoGetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse) {
+    option (google.api.http) = {
+        get: "/bim/v1/iam/users/roles"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Search User with Role";
+        tags: "UserRoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  rpc DoGetRoleUsers(GetRoleUsersRequest) returns (GetRoleUsersResponse) {
+    option (google.api.http) = {
+        get: "/bim/v1/iam/roles/users"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Search Users with Role";
+        tags: "UserRoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+  
+  rpc DoSetUserRole (SetUserRoleRequest) returns (SetUserRoleResponse) {
+    option (google.api.http) = {
+        post: "/bim/v1/iam/users/roles",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Set user with roles";
+        tags: "UserRoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+  
+  rpc DoSetRoleUser (SetRoleUserRequest) returns (SetRoleUserResponse) {
+    option (google.api.http) = {
+        post: "/bim/v1/iam/roles/users",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Set user with roles";
+        tags: "UserRoleAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+  // JWT
+  rpc DoVerifyJWTToken(VerifyTokenRequest) returns (VerifyTokenResponse){
+    option (google.api.http) = {
+        post:"/cim/v1/jwt/verify",
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        summary: "Verify given jwt";
+        tags: "ManagerAPIs";
+        security: {
+            security_requirement: {
+                key: "APIKeyAuthentication";
+                value: {}
+            }
+        }
+    };
+  }
+
+}
