@@ -19,7 +19,7 @@ auth:
   authorizations:
     enabled: false
 mysql:
-  host: 172.27.42.11
+  host: 192.168.1.10
   port: 3306
   username: root
   password: 

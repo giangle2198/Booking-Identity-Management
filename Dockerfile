@@ -2,7 +2,7 @@
 
 FROM golang:1.17.6-alpine3.15
 WORKDIR /app
-ARG MYSQL__HOST=172.27.42.11
+ARG MYSQL__HOST=192.168.1.10
 ENV MYSQL__HOST $MYSQL__HOST
 COPY . /app
 RUN go mod download
