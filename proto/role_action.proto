@@ -1,0 +1,158 @@
+syntax = "proto3";
+option go_package = ".;pb";
+package pb;
+
+import "validator.proto";
+import "gogoproto/gogo.proto";
+
+message RoleDetail {
+  uint32 role_id = 1[
+    (gogoproto.customname) = "RoleID"
+  ];
+  string role_name = 2;
+  string role_description = 3;
+  string role_manager_domain = 4;
+  string role_alias = 5;
+  bool is_active = 6;
+}
+
+message GetRolesRequest {
+  string role_ids = 1[
+    (gogoproto.customname) = "RoleIDs"
+  ];
+}
+
+message GetRolesResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+  repeated RoleDetail roles = 4;
+}
+
+message GetRoleDetailRequest{
+  uint32 role_id = 1[
+    (gogoproto.customname) = "RoleID"
+  ];
+} 
+
+message GetRoleDetailResponse{
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+  RoleDetail role_detail = 4;
+}
+
+
+message CreateRoleRequest {
+  string role_name = 1 [
+      (validator.field) = {
+          regex: "^([^!@#$%&*+=~?;:<>{}]*)$"
+      }
+  ];
+  string role_description = 2[
+      (validator.field) = {
+          regex:"^([^!@#$%&*+=~?;:<>{}]*)$"
+      }
+  ];
+  string role_manager_domain = 3[
+      (validator.field) = {
+          regex: "^(^[\\w|\\/])([\\_\\-\\/a-zA-Z0-9\\ ]*)([\\w]$)$"
+      }
+  ];
+  string role_alias = 4[
+      (validator.field) = {
+          regex: "^(^[\\w|\\/])([\\_\\-\\/a-zA-Z0-9\\ ]*)([\\w]$)$"
+      }
+  ];
+}
+
+message CreateRoleResponse {
+  uint32 role_id = 1[
+    (gogoproto.customname) = "RoleID"
+  ];
+  string status_code = 2;
+  string reason_code = 3;
+  string reason_message = 4;
+}
+
+
+message  UpdateRoleRequest {
+  uint32 id = 1[
+    (gogoproto.customname) = "ID"
+  ];
+  bool is_active = 2;
+  string role_description = 3;
+  string role_alias = 4;
+  string role_manager_domain =5;
+  string role_name = 6;
+}
+
+message UpdateRoleResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+message DeleteRoleRequest {
+  uint32 id = 1[
+    (gogoproto.customname) = "ID"
+  ];
+}
+
+message DeleteRoleResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+// ------------------------- USER ROLE ------------------------
+
+message GetUserRolesRequest {
+  string domain = 1;
+}
+
+message GetUserRolesResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+  repeated uint32 roles = 4;
+}
+
+message GetRoleUsersRequest {
+  uint32 role_id = 1[
+    (gogoproto.customname) = "RoleID"
+  ];
+}
+
+message GetRoleUsersResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+  repeated string domain = 4;
+}
+
+message SetUserRoleRequest {
+  string domain = 1;
+  repeated uint32 role_ids = 2;
+}
+
+message SetUserRoleResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}
+
+message SetRoleUserRequest {
+  uint32 role_id = 1[
+    (gogoproto.customname) = "RoleID"
+  ];
+  repeated uint32 user_ids = 2[
+    (gogoproto.customname) = "UserIDs"
+  ];
+}
+
+message SetRoleUserResponse {
+  string status_code = 1;
+  string reason_code = 2;
+  string reason_message = 3;
+}

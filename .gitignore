@@ -1,0 +1,5 @@
+/vendor
+/third_party
+
+/.vscode
+/cmd/server/__debug_bin
